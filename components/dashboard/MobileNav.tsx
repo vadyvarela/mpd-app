@@ -23,13 +23,13 @@ export default function MobileNav() {
           href={item.href}
           className={cn(
             'flex flex-col items-center gap-0.5 p-1 transition-all',
-            pathname === item.href ? 'text-[#16a34a]' : 'text-[#ADB5BD]'
+            pathname === item.href ? 'text-primary' : 'text-[#ADB5BD]'
           )}
         >
           <item.icon className="w-4 h-4" />
           <span className="text-[8px] font-bold uppercase tracking-wider">{item.name}</span>
           {pathname === item.href && (
-            <motion.div layoutId="mobileTabIndicator" className="w-1 h-1 rounded-full bg-[#16a34a]" />
+            <motion.div layoutId="mobileTabIndicator" className="w-1 h-1 rounded-full bg-primary" />
           )}
         </Link>
       ))}

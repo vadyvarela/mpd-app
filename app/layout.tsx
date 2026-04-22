@@ -14,8 +14,11 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: 'MpD | Gestão de Eleitores',
-  description: 'Sistema moderno de acompanhamento de eleitores',
+  title: 'MpD — Movimento para Democracia Cabo Verde',
+  description: 'O Movimento para a Democracia, conhecido também pela sigla MpD, é um partido político de centro-direita de Cabo Verde. Esteve no poder entre 1991 e 2001. Os seus membros têm como alcunha &quot;os ventoinhas&quot;, por causa do emblema do partido que faz lembrar uma ventoinha, e identificam-se com a cor verde.',
+  icons: {
+    icon: '/favicon.ico',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

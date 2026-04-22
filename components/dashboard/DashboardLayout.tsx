@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Loader2 } from 'lucide-react'
-import type { User } from '@/lib/auth'
+import type { User } from '@/services/auth.service'
 import MobileHeader from './MobileHeader'
 import Sidebar from './Sidebar'
 import MobileNav from './MobileNav'
@@ -15,10 +15,17 @@ export default function DashboardLayout({
   user: User
   children: React.ReactNode
 }) {
-  const [isVisualLoading, setIsVisualLoading] = useState(true)
+  const [isVisualLoading, setIsVisualLoading] = useState(() => {
+    if (typeof window === 'undefined') return true
+    return !sessionStorage.getItem('app-loaded')
+  })
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsVisualLoading(false), 1200)
+    if (!isVisualLoading) return
+    const timer = setTimeout(() => {
+      sessionStorage.setItem('app-loaded', '1')
+      setIsVisualLoading(false)
+    }, 1200)
     return () => clearTimeout(timer)
   }, [])
 
@@ -36,8 +43,8 @@ export default function DashboardLayout({
             transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
             className="mb-6 flex flex-col items-center"
           >
-            <div className="w-16 h-16 bg-[#16a34a] rounded-2xl flex items-center justify-center text-white font-bold text-3xl shadow-xl shadow-green-100 italic mb-4">M</div>
-            <Loader2 className="w-8 h-8 text-[#16a34a] animate-spin" />
+            <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center text-white font-bold text-3xl shadow-xl shadow-green-100 italic mb-4">M</div>
+            <Loader2 className="w-8 h-8 text-primary animate-spin" />
           </motion.div>
           <p className="text-[10px] font-bold text-[#ADB5BD] uppercase tracking-[0.2em] animate-pulse">Sincronizando Sistema...</p>
         </motion.div>

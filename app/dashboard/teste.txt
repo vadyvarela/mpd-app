@@ -1,0 +1,432 @@
+'use client';
+
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  Search, 
+  CheckCircle2, 
+  XCircle, 
+  ChevronRight
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+const MOCK_VOTERS = [
+  { id: '384', name: 'ANA ILDA MARTINS PINTO', status: 'not-voted', zone: 'PR-AL-01' },
+  { id: '383', name: 'ANA GABRIELA SOARES PEREIRA', status: 'not-voted', zone: 'PR-AL-01' },
+  { id: '382', name: 'ANA ENEIDA GOMES VARELA', status: 'not-voted', zone: 'PR-AL-01' },
+  { id: '381', name: 'ANA EMILIA TEIXEIRA MONTEIRO', status: 'not-voted', zone: 'PR-AL-01' },
+  { id: '379', name: 'BEATRIZ MENDES GOMES', status: 'not-voted', zone: 'PR-AL-02' },
+];
+
+export default function HomePage() {
+  const [confirmVoteId, setConfirmVoteId] = useState<string | null>(null);
+  const [notVoteId, setNotVoteId] = useState<string | null>(null);
+
+  const stats = {
+    total: 1250,
+    voted: 840,
+    missing: 45,
+    percentage: 67
+  };
+
+  const availableZones = ['PR-AL-01', 'PR-AL-02'];
+  const homeVoters = MOCK_VOTERS;
+
+  const handleConfirm = () => {
+    setConfirmVoteId(null);
+  };
+
+  const handleReason = (reason: string) => {
+    setNotVoteId(null);
+  };
+
+  return (
+    <motion.div key="home" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="max-w-5xl mx-auto">
+      <header className="mb-4 md:mb-10">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4 md:mb-10">
+          <div>
+            <h2 className="font-display font-bold text-xl md:text-3xl text-[#1A1A1A] mb-0.5">Pendentes</h2>
+            <p className="text-[#6C757D] text-[10px] md:text-sm">Aguardando confirmação de presença na votação.</p>
+          </div>
+          <div className="flex items-center gap-2 md:gap-3 bg-white p-1.5 md:p-2 rounded-lg md:rounded-xl border border-[#E9ECEF] shadow-sm overflow-hidden w-full md:min-w-[320px] md:w-auto">
+            <Search className="w-4 h-4 md:w-5 h-5 text-[#ADB5BD] ml-1.5 md:ml-2" />
+            <input 
+              type="text" 
+              placeholder="Pesquisar por nome ou ID..." 
+              readOnly
+              className="flex-1 bg-transparent border-none outline-none text-xs md:text-sm py-1 md:py-2 px-1 text-[#1A1A1A] placeholder:text-[#ADB5BD]" 
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-2 mb-4 md:mb-8">
+          <button
+            className={cn(
+              "px-3 py-1 rounded-full text-[10px] md:text-xs font-bold transition-all bg-[#16a34a] text-white shadow-md"
+            )}
+          >
+            Todas Mesas
+          </button>
+          {availableZones.map(zone => (
+            <button
+              key={zone}
+              className={cn(
+                "px-3 py-1 rounded-full text-[10px] md:text-xs font-bold transition-all bg-white text-[#6C757D] border border-[#E9ECEF] hover:bg-[#F8F9FA]"
+              )}
+            >
+              {zone}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
+          {[
+            { label: 'Total', value: stats.total, sub: 'Inscritos', color: 'text-blue-600', dot: 'bg-blue-600' },
+            { label: 'Votos', value: stats.voted, sub: `${stats.percentage}%`, color: 'text-[#16a34a]', dot: 'bg-[#16a34a]' },
+            { label: 'Faltas', value: stats.missing, sub: 'Com motivo', color: 'text-red-600', dot: 'bg-red-600' },
+            { label: 'Progresso', value: `${stats.percentage}%`, sub: 'Realizado', color: 'text-purple-600', dot: 'bg-purple-600' },
+          ].map((stat, i) => (
+            <motion.div key={stat.label} initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="bg-white p-3 md:p-6 rounded-xl md:rounded-2xl border border-[#E9ECEF] shadow-sm">
+              <div className="flex items-center gap-1 md:gap-1.5 mb-1 md:mb-2">
+                <div className={cn("w-1 h-1 md:w-1.5 md:h-1.5 rounded-full", stat.dot)} />
+                <span className="text-[8px] md:text-[10px] font-bold text-[#ADB5BD] uppercase tracking-tighter md:tracking-wider">{stat.label}</span>
+              </div>
+              <div className={cn("text-lg md:text-2xl font-display font-bold md:mb-1", stat.color)}>{stat.value}</div>
+              <div className="text-[8px] md:text-[10px] text-[#6C757D] font-medium">{stat.sub}</div>
+            </motion.div>
+          ))}
+        </div>
+      </header>
+
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-2 md:gap-4 lg:gap-6">
+        {false ? (
+          Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="bg-white rounded-lg md:rounded-2xl border border-[#E9ECEF] p-2 md:p-6 animate-pulse">
+              <div className="flex items-center justify-between gap-2 md:gap-6">
+                <div className="flex items-center gap-2 md:gap-4 flex-1">
+                  <div className="w-8 h-8 md:w-12 md:h-12 rounded-md md:rounded-xl bg-[#F8F9FA] flex-shrink-0" />
+                  <div className="flex-1 space-y-2">
+                    <div className="h-3 md:h-4 bg-[#F8F9FA] rounded w-3/4" />
+                    <div className="h-2 md:h-2.5 bg-[#F8F9FA] rounded w-1/4" />
+                  </div>
+                </div>
+                <div className="flex gap-1 md:gap-3">
+                  <div className="w-[50px] md:w-[120px] h-7 md:h-12 bg-[#F8F9FA] rounded-md md:rounded-xl" />
+                  <div className="w-7 md:w-[60px] h-7 md:h-12 bg-[#F8F9FA] rounded-md md:rounded-xl" />
+                </div>
+              </div>
+            </div>
+          ))
+        ) : homeVoters.length > 0 ? (
+          homeVoters.map((voter, i) => (
+            <motion.div key={voter.id} initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.03 }} 
+              className="bg-white rounded-lg md:rounded-2xl border border-[#E9ECEF] p-2 md:p-6 transition-all hover:bg-[#F8F9FA]/30">
+              <div className="flex items-center justify-between gap-2 md:gap-6 overflow-hidden">
+                <div className="flex items-center gap-2 md:gap-4 flex-1 min-w-0">
+                  <div className="w-8 h-8 md:w-12 md:h-12 rounded-md md:rounded-xl flex-shrink-0 flex items-center justify-center text-[10px] md:text-lg font-bold bg-[#F8F9FA] text-[#16a34a] border border-[#E9ECEF]">
+                    {voter.name.charAt(0)}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-bold text-[#1A1A1A] text-[11px] md:text-base leading-tight truncate md:whitespace-normal">{voter.name}</h3>
+                    <div className="flex items-center gap-1 md:gap-2 mt-0.5 md:mt-1">
+                      <span className="text-[7px] md:text-[10px] text-[#ADB5BD] font-bold bg-[#F8F9FA] px-1 md:px-2 py-0.5 rounded border border-[#E9ECEF]">ID {voter.id}</span>
+                      <span className="text-[10px] text-[#ADB5BD] hidden md:inline">• {voter.zone}</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1 md:gap-3 flex-shrink-0">
+                  <button 
+                    onClick={() => setConfirmVoteId(voter.id)} 
+                    className="bg-[#16a34a] text-white px-2.5 md:px-8 py-1.5 md:py-3 rounded-md md:rounded-xl text-[10px] md:text-sm font-bold shadow-sm hover:bg-[#15803d] flex items-center justify-center min-w-[50px] md:min-w-[120px] transition-all active:scale-95"
+                  >
+                    Votou
+                  </button>
+                  <button 
+                    onClick={() => setNotVoteId(voter.id)} 
+                    className="p-1.5 md:px-6 md:py-3 rounded-md md:rounded-xl text-[#DC3545] bg-[#FFF5F5] border border-red-50 hover:bg-red-100 transition-all font-bold text-xs flex items-center gap-2 active:scale-95"
+                  >
+                    <span className="hidden md:inline">Não Votou</span>
+                    <XCircle className="w-3.5 h-3.5 md:w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          ))
+        ) : (
+          <div className="py-20 text-center col-span-full">
+            <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4"><CheckCircle2 className="w-8 h-8 text-[#16a34a]" /></div>
+            <h3 className="font-display font-bold text-lg text-[#1A1A1A]">Meta Batida</h3>
+            <p className="text-[#6C757D] text-xs">Tudo sincronizado.</p>
+          </div>
+        )}
+      </div>
+
+      {/* Modals */}
+      <AnimatePresence>
+        {confirmVoteId && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setConfirmVoteId(null)} className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+            <motion.div initial={{ opacity: 0, scale: 0.9, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9, y: 20 }} className="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl p-8 overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-2 bg-[#16a34a]" />
+              <div className="w-16 h-16 bg-[#F0FDF4] rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle2 className="w-8 h-8 text-[#16a34a]" />
+              </div>
+              <h3 className="text-xl font-display font-bold text-[#1A1A1A] text-center mb-2">Confirmar Votação?</h3>
+              <p className="text-[#6C757D] text-center text-sm mb-8">Confirmar que <strong>{homeVoters.find(v => v.id === confirmVoteId)?.name}</strong> votou.</p>
+              <div className="flex gap-3">
+                <button onClick={() => setConfirmVoteId(null)} className="flex-1 py-3 px-4 rounded-xl text-sm font-bold text-[#6C757D] border border-[#E9ECEF]">Cancelar</button>
+                <button onClick={handleConfirm} className="flex-1 py-3 px-4 rounded-xl text-sm font-bold text-white bg-[#16a34a] hover:bg-[#15803d] flex items-center justify-center gap-2 outline-none">
+                  Confirmar
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {notVoteId && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setNotVoteId(null)} className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+            <motion.div initial={{ opacity: 0, scale: 0.9, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9, y: 20 }} className="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl p-8">
+              <div className="absolute top-0 left-0 w-full h-2 bg-[#DC3545]" />
+              <h3 className="text-xl font-display font-bold text-[#1A1A1A] mb-2">Motivo da Ausência</h3>
+              <p className="text-[#6C757D] text-sm mb-6">Selecione o motivo pelo qual o eleitor não votou.</p>
+              <div className="space-y-2">
+                {['Falecido', 'Viajou', 'Ausente', 'Outro'].map((reason) => (
+                  <button
+                    key={reason}
+                    onClick={() => handleReason(reason)}
+                    className="w-full text-left px-5 py-4 rounded-2xl border border-[#E9ECEF] hover:border-[#16a34a] hover:bg-[#F0FDF4] hover:text-[#16a34a] font-bold text-sm transition-all group relative overflow-hidden"
+                  >
+                    <div className="flex items-center justify-between">
+                      {reason}
+                    </div>
+                    <ChevronRight className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-1" />
+                  </button>
+                ))}
+              </div>
+              <button onClick={() => setNotVoteId(null)} className="w-full mt-6 py-3 text-sm font-bold text-[#ADB5BD] hover:text-[#1A1A1A] transition-colors">Cancelar</button>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
+HOME HomePage
+
+
+
+
+
+
+
+
+'use client';
+
+import React from 'react';
+import { motion } from 'framer-motion';
+
+const MOCK_PROCESSED = [
+  { id: '380', name: 'ANTONIO LOPES SILVA', status: 'voted', zone: 'PR-AL-02', reason: '' },
+  { id: '378', name: 'CARLOS ALBERTO FERREIRA', status: 'voted', zone: 'PR-AL-01', reason: '' },
+  { id: '377', name: 'ELSA MARIA GOMES', status: 'not-voted', zone: 'PR-AL-01', reason: 'Viajou' },
+];
+
+export default function EleitoresPage() {
+  const listVoters = MOCK_PROCESSED;
+  const resetStatus = (id: string) => {};
+
+  return (
+    <motion.div key="eleitores-list" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="max-w-5xl mx-auto">
+      <div className="mb-4">
+        <h2 className="font-display font-bold text-xl md:text-3xl text-[#1A1A1A] mb-0.5">Processados</h2>
+        <p className="text-[#6C757D] text-[10px] md:text-sm">Histórico de votação.</p>
+      </div>
+
+      <div className="md:hidden space-y-2">
+        {false ? (
+          Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="bg-white rounded-lg border border-[#E9ECEF] p-2.5 animate-pulse">
+              <div className="h-3 bg-[#F8F9FA] rounded w-3/4 mb-2"></div>
+              <div className="h-2 bg-[#F8F9FA] rounded w-1/4 mb-3"></div>
+              <div className="h-8 bg-[#F8F9FA] rounded-md w-full"></div>
+            </div>
+          ))
+        ) : listVoters.length > 0 ? (
+          listVoters.map((voter) => (
+            <div key={voter.id} className="bg-white rounded-lg border border-[#E9ECEF] p-2.5 shadow-sm">
+              <div className="flex justify-between items-center mb-2">
+                <div className="min-w-0 flex-1">
+                  <div className="font-bold text-[#1A1A1A] text-[11px] truncate">{voter.name}</div>
+                  <div className="text-[8px] text-[#ADB5BD]">ID: {voter.id}</div>
+                </div>
+                {voter.status === 'voted' ? (
+                  <span className="text-[7px] font-bold text-green-600 bg-green-50 px-1.5 py-0.5 rounded-full uppercase tracking-tighter">Votou</span>
+                ) : (
+                  <span className="text-[7px] font-bold text-red-600 bg-red-50 px-1.5 py-0.5 rounded-full uppercase tracking-tighter">{voter.reason}</span>
+                )}
+              </div>
+              <button 
+                onClick={() => resetStatus(voter.id)} 
+                className="w-full text-[9px] font-bold text-[#6C757D] border border-[#E9ECEF] py-1.5 rounded-md hover:bg-[#F8F9FA] transition-all flex items-center justify-center gap-1.5"
+              >
+                Limpar Status
+              </button>
+            </div>
+          ))
+        ) : (
+          <div className="py-10 text-center text-[#6C757D] text-sm">Nenhum registro processado.</div>
+        )}
+      </div>
+
+      <div className="hidden md:block bg-white rounded-2xl border border-[#E9ECEF] overflow-hidden shadow-sm">
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr className="bg-[#F8F9FA] border-bottom border-[#E9ECEF]">
+              <th className="px-6 py-4 text-xs font-bold text-[#ADB5BD] uppercase tracking-wider">Eleitor</th>
+              <th className="px-6 py-4 text-xs font-bold text-[#ADB5BD] uppercase tracking-wider">Status / Motivo</th>
+              <th className="px-6 py-4 text-xs font-bold text-[#ADB5BD] uppercase tracking-wider text-right">Ação</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-[#E9ECEF]">
+            {false ? (
+              Array.from({ length: 3 }).map((_, i) => (
+                <tr key={i} className="animate-pulse">
+                  <td className="px-6 py-5">
+                    <div className="h-4 bg-[#F8F9FA] rounded w-3/4 mb-2"></div>
+                    <div className="h-3 bg-[#F8F9FA] rounded w-1/4"></div>
+                  </td>
+                  <td className="px-6 py-5">
+                    <div className="h-6 bg-[#F8F9FA] rounded-full w-20"></div>
+                  </td>
+                  <td className="px-6 py-5">
+                    <div className="h-9 bg-[#F8F9FA] rounded-xl w-32 ml-auto"></div>
+                  </td>
+                </tr>
+              ))
+            ) : listVoters.length > 0 ? (
+              listVoters.map((voter) => (
+                <tr key={voter.id} className="hover:bg-[#F8F9FA]/50 transition-colors">
+                  <td className="px-6 py-4">
+                    <div className="font-bold text-[#1A1A1A]">{voter.name}</div>
+                    <div className="text-xs text-[#6C757D]">ID: {voter.id}</div>
+                  </td>
+                  <td className="px-6 py-4">
+                    {voter.status === 'voted' ? (
+                      <span className="flex items-center gap-2 text-xs font-bold text-green-600 bg-green-50 px-3 py-1 rounded-full w-fit uppercase tracking-tighter">Votou</span>
+                    ) : (
+                      <span className="flex items-center gap-2 text-xs font-bold text-red-600 bg-red-50 px-3 py-1 rounded-full w-fit uppercase tracking-tighter">{voter.reason}</span>
+                    )}
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <button 
+                      onClick={() => resetStatus(voter.id)} 
+                      className="text-xs font-bold text-[#6C757D] hover:text-[#1A1A1A] border border-[#E9ECEF] px-4 py-2 rounded-xl hover:bg-white transition-all shadow-sm flex items-center gap-2 ml-auto"
+                    >
+                      Limpar Status
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr><td colSpan={3} className="px-6 py-20 text-center text-[#6C757D]">Nenhum registro processado.</td></tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </motion.div>
+  );
+}
+
+
+
+
+
+
+
+
+PEFIL
+'use client';
+
+import React from 'react';
+import { motion } from 'framer-motion';
+import { User, Search, LogOut } from 'lucide-react';
+
+export default function ProfilePage() {
+  const logout = () => {
+    window.location.href = '/login';
+  };
+
+  return (
+    <motion.div key="profile" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="max-w-5xl mx-auto">
+      <div className="mb-4 md:mb-10 flex justify-between items-end">
+        <div>
+          <h2 className="font-display font-bold text-xl md:text-3xl text-[#1A1A1A] mb-0.5">Meu Perfil</h2>
+          <p className="text-[#6C757D] text-[10px] md:text-sm">Gerencie suas informações.</p>
+        </div>
+        <button 
+          onClick={() => logout()}
+          className="md:hidden flex items-center gap-2 px-4 py-2 rounded-xl text-red-600 bg-red-50 font-bold text-[10px] uppercase tracking-wider"
+        >
+          <LogOut className="w-3 h-3" />
+          Sair
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
+        <div className="lg:col-span-1">
+          <div className="bg-white rounded-xl border border-[#E9ECEF] p-4 md:p-8 shadow-sm text-center">
+            <div className="relative inline-block mb-4 md:mb-6">
+              <div className="w-20 h-20 md:w-32 md:h-32 bg-[#F0FDF4] rounded-full flex items-center justify-center border-2 md:border-4 border-white shadow-lg">
+                <User className="w-10 h-10 md:w-16 md:h-16 text-[#16a34a]" />
+              </div>
+              <button className="absolute bottom-0 right-0 p-1.5 md:p-2.5 bg-white rounded-full border border-[#E9ECEF] shadow-md text-[#6C757D]">
+                <Search className="w-3 h-3 md:w-4 h-4" />
+              </button>
+            </div>
+            
+            <h3 className="font-display font-bold text-base md:text-xl text-[#1A1A1A] mb-0.5">Delegado MpD</h3>
+            <p className="text-[10px] md:text-sm text-[#6C757D] mb-4 md:mb-6">pral01@mpd.cv</p>
+            
+            <button className="w-full bg-[#16a34a] text-white py-2 md:py-3.5 rounded-lg md:rounded-2xl font-bold text-xs md:text-sm shadow-sm md:shadow-lg md:shadow-green-100 hover:bg-[#15803d]">
+              Alterar password
+            </button>
+          </div>
+        </div>
+
+        <div className="lg:col-span-2">
+          <div className="bg-white rounded-xl border border-[#E9ECEF] p-4 md:p-8 shadow-sm">
+            <form className="space-y-3 md:space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                <div className="space-y-1 md:space-y-2">
+                  <label className="text-[10px] md:text-xs font-bold text-[#ADB5BD] uppercase tracking-wider ml-1">Primeiro Nome</label>
+                  <input type="text" placeholder="Nome" className="w-full px-3 md:px-4 py-2 md:py-3 rounded-lg md:rounded-xl border border-[#E9ECEF] bg-[#F8F9FA] text-xs md:text-sm outline-none" />
+                </div>
+                <div className="space-y-1 md:space-y-2">
+                  <label className="text-[10px] md:text-xs font-bold text-[#ADB5BD] uppercase tracking-wider ml-1">Apelido</label>
+                  <input type="text" placeholder="Apelido" className="w-full px-3 md:px-4 py-2 md:py-3 rounded-lg md:rounded-xl border border-[#E9ECEF] bg-[#F8F9FA] text-xs md:text-sm outline-none" />
+                </div>
+              </div>
+              <div className="space-y-1 md:space-y-2">
+                <label className="text-[10px] md:text-xs font-bold text-[#ADB5BD] uppercase tracking-wider ml-1">Email</label>
+                <input type="email" defaultValue="pral01@mpd.cv" className="w-full px-3 md:px-4 py-2 md:py-3 rounded-lg md:rounded-xl border border-[#E9ECEF] bg-[#F8F9FA] text-xs md:text-sm outline-none" />
+              </div>
+              <div className="space-y-1 md:space-y-2">
+                <label className="text-[10px] md:text-xs font-bold text-[#ADB5BD] uppercase tracking-wider ml-1">Username</label>
+                <input type="text" defaultValue="pral01" disabled className="w-full px-3 md:px-4 py-2 md:py-3 rounded-lg md:rounded-xl border border-[#E9ECEF] bg-[#F8F9FA] text-xs md:text-sm cursor-not-allowed opacity-60" />
+              </div>
+              <div className="pt-2 md:pt-4 flex justify-end">
+                <button type="button" className="bg-[#16a34a] text-white w-full md:w-auto px-10 py-2 md:py-3.5 rounded-lg md:rounded-2xl font-bold text-xs md:text-sm shadow-sm md:shadow-lg md:shadow-green-100">
+                  Guardar Alterações
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}

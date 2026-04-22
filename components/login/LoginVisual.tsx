@@ -12,7 +12,7 @@ const features = [
 
 export default function LoginVisual() {
   return (
-    <div className="hidden md:flex md:w-[45%] lg:w-[40%] bg-[#16a34a] relative overflow-hidden flex-col items-center justify-center p-12">
+    <div className="hidden md:flex md:w-[45%] lg:w-[40%] bg-primary relative overflow-hidden flex-col items-center justify-center p-12">
       <motion.div
         animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
         transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}

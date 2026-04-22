@@ -4,10 +4,18 @@ export type User = {
   id: number
   username: string
   email: string
-  is_superuser: boolean
+  first_name: string
+  last_name: string
+  is_active: boolean
   is_staff: boolean
+  is_superuser: boolean
   groups: string[]
   permissions: string[]
+  militante_id: number | null
+}
+
+export function isDelegado(user: User): boolean {
+  return user.groups.includes('delegado')
 }
 
 export async function getUser(): Promise<User | null> {

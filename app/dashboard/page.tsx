@@ -1,7 +1,13 @@
-export default function DashboardPage() {
-  return (
-    <div className="flex items-center justify-center h-full">
-      <p className="text-[#1A1A1A] font-bold text-xl">Bem-vindo ao Dashboard</p>
-    </div>
-  )
+import { getEleitores } from '@/services/eleitores.service'
+import EleitoresHome from '@/components/dashboard/EleitoresHome'
+
+type Props = {
+  searchParams: Promise<{ search?: string; ordering?: string }>
+}
+
+export default async function DashboardPage({ searchParams }: Props) {
+  const { search, ordering } = await searchParams
+  const eleitores = await getEleitores({ search, ordering })
+
+  return <EleitoresHome eleitores={eleitores} defaultSearch={search ?? ''} />
 }
