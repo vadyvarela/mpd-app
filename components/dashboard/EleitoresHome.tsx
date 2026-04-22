@@ -68,7 +68,7 @@ export default function EleitoresHome({
             <p className="text-[#6C757D] text-[10px] md:text-sm">Aguardando confirmação de presença na votação.</p>
           </div>
           <div className="flex items-center gap-2 md:gap-3 bg-white p-1.5 md:p-2 rounded-lg md:rounded-xl border border-[#E9ECEF] shadow-sm overflow-hidden w-full md:min-w-[320px] md:w-auto">
-            <Search className="w-4 h-4 text-[#ADB5BD] ml-1.5 md:ml-2 flex-shrink-0" />
+            <Search className="w-4 h-4 text-[#ADB5BD] ml-1.5 md:ml-2 shrink-0" />
             <input
               type="text"
               value={search}
@@ -98,32 +98,48 @@ export default function EleitoresHome({
           </div>
         )}
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
-          {[
-            { label: 'Total', value: stats.total, sub: 'Inscritos', color: 'text-blue-600', dot: 'bg-blue-600' },
-            { label: 'Votos', value: stats.voted, sub: `${stats.percentage}%`, color: 'text-primary', dot: 'bg-primary' },
-            { label: 'Faltas', value: stats.missing, sub: 'Com motivo', color: 'text-red-600', dot: 'bg-red-600' },
-            { label: 'Progresso', value: `${stats.percentage}%`, sub: 'Realizado', color: 'text-purple-600', dot: 'bg-purple-600' },
-          ].map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.05 }}
-              className="bg-white p-3 md:p-6 rounded-xl md:rounded-2xl border border-[#E9ECEF] shadow-sm"
-            >
-              <div className="flex items-center gap-1 md:gap-1.5 mb-1 md:mb-2">
-                <div className={cn('w-1 h-1 md:w-1.5 md:h-1.5 rounded-full', stat.dot)} />
-                <span className="text-[8px] md:text-[10px] font-bold text-[#ADB5BD] uppercase tracking-tighter md:tracking-wider">{stat.label}</span>
-              </div>
-              <div className={cn('text-lg md:text-2xl font-display font-bold md:mb-1', stat.color)}>{stat.value}</div>
-              <div className="text-[8px] md:text-[10px] text-[#6C757D] font-medium">{stat.sub}</div>
-            </motion.div>
-          ))}
-        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+  {[
+    { label: 'Total', value: stats.total, sub: 'Inscritos', color: '#3B82F6', bg: 'from-blue-50 to-blue-100/40', border: 'border-blue-200/60', icon: '👥' },
+    { label: 'Votos', value: stats.voted, sub: `${stats.percentage}% do total`, color: '#10B981', bg: 'from-emerald-50 to-emerald-100/40', border: 'border-emerald-200/60', icon: '✓' },
+    { label: 'Faltas', value: stats.missing, sub: 'Com motivo', color: '#EF4444', bg: 'from-red-50 to-red-100/40', border: 'border-red-200/60', icon: '✗' },
+    { label: 'Progresso', value: `${stats.percentage}%`, sub: 'Realizado', color: '#8B5CF6', bg: 'from-violet-50 to-violet-100/40', border: 'border-violet-200/60', icon: '◎' },
+  ].map((stat, i) => (
+    <motion.div
+      key={stat.label}
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: i * 0.07, ease: 'easeOut' }}
+      className={cn(
+        'relative overflow-hidden bg-linear-to-br rounded-xl border p-4 md:p-5'
+      )}
+    >
+      <div className="flex items-center justify-between mb-3">
+        <span className="text-[10px] md:text-xs font-semibold uppercase tracking-widest text-[#6C757D]">
+          {stat.label}
+        </span>
+        <span className="text-base leading-none">{stat.icon}</span>
+      </div>
+
+      <div
+        className="text-2xl md:text-3xl font-bold tabular-nums mb-1"
+        style={{ color: stat.color }}
+      >
+        {stat.value}
+      </div>
+
+      <div className="text-[10px] md:text-xs text-[#6C757D] font-medium">{stat.sub}</div>
+
+      <div
+        className="absolute bottom-0 left-0 right-0 h-0.5 opacity-40"
+        style={{ backgroundColor: stat.color }}
+      />
+    </motion.div>
+  ))}
+</div>
       </header>
 
-      <div className="grid grid-cols-1 gap-2 md:gap-4 lg:gap-6">
+      <div className="grid grid-cols-1 gap-2 md:gap-3 lg:gap-4">
         {pending.length > 0 ? (
           pending.map((eleitor, i) => (
             <motion.div
@@ -131,7 +147,7 @@ export default function EleitoresHome({
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.03 }}
-              className="bg-white rounded-lg md:rounded-2xl border border-[#E9ECEF] p-2 md:p-6 transition-all hover:bg-[#F8F9FA]/30"
+              className="bg-white rounded-lg md:rounded-xl border border-[#E9ECEF] p-2 md:p-4 transition-all hover:bg-[#F8F9FA]/30"
             >
               <div className="flex items-center justify-between gap-2 md:gap-6 overflow-hidden">
                 <div className="flex items-center gap-2 md:gap-4 flex-1 min-w-0">
@@ -143,14 +159,14 @@ export default function EleitoresHome({
                       {eleitor.nome}
                     </h3>
                     <div className="flex items-center gap-1 md:gap-2 mt-0.5 md:mt-1">
-                      <span className="text-[7px] md:text-[10px] text-[#ADB5BD] font-bold bg-[#F8F9FA] px-1 md:px-2 py-0.5 rounded border border-[#E9ECEF]">
+                      <span className="text-xs md:text-[12px] text-[#ADB5BD] font-bold bg-[#F8F9FA] px-1 md:px-2 py-0.5 rounded border border-[#E9ECEF]">
                         Nº {eleitor.nr_eleitor}
                       </span>
-                      <span className="text-[10px] text-[#ADB5BD] hidden md:inline">• {eleitor.nr_mesa}</span>
+                      <span className="text-xs font-bold text-gray-400 hidden md:inline">• {eleitor.nr_mesa}</span>
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-1 md:gap-3 flex-shrink-0">
+                <div className="flex items-center gap-1 md:gap-3 shrink-0">
                   <button
                     onClick={() => setConfirmId(eleitor.id)}
                     className="bg-primary text-white px-2.5 md:px-8 py-1.5 md:py-3 rounded-md md:rounded-xl text-[10px] md:text-sm font-bold shadow-sm hover:bg-[#15803d] flex items-center justify-center min-w-[50px] md:min-w-[120px] transition-all active:scale-95"

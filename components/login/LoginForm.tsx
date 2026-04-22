@@ -35,7 +35,6 @@ export default function LoginForm() {
           animate={{ opacity: 1, y: 0 }}
           className="bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-xl text-xs font-bold mb-6 flex items-center gap-2"
         >
-          <div className="w-1 h-1 bg-red-600 rounded-full" />
           {state.error}
         </motion.div>
       )}
@@ -43,7 +42,7 @@ export default function LoginForm() {
       <form action={formAction} className="space-y-5">
         <div className="space-y-2">
           <label className="text-[10px] font-bold text-[#ADB5BD] uppercase tracking-wider ml-1">
-            Email Institucional
+            Nome do utilizado
           </label>
           <div className="relative group">
             <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#ADB5BD] group-focus-within:text-primary transition-colors">
@@ -54,7 +53,7 @@ export default function LoginForm() {
               name="username"
               placeholder="Praia"
               required
-              className="w-full text-gray-500 pl-12 pr-4 py-4 rounded-2xl border border-[#E9ECEF] bg-white text-sm outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all"
+              className="w-full text-gray-500 pl-12 pr-4 py-4 rounded-2xl border border-[#E9ECEF] bg-white text-[16px] md:text-sm outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all"
             />
           </div>
         </div>
@@ -80,7 +79,7 @@ export default function LoginForm() {
               name="password"
               placeholder="••••••••"
               required
-              className="w-full text-gray-500 pl-12 pr-4 py-4 rounded-2xl border border-[#E9ECEF] bg-white text-sm outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all"
+              className="w-full text-gray-500 pl-12 pr-4 py-4 rounded-2xl border border-[#E9ECEF] bg-white text-[16px] md:text-sm outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all"
             />
           </div>
         </div>
