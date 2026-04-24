@@ -1,5 +1,6 @@
 import { getVotacoes, getVotacoesStats } from '@/services/votacoes.service'
 import EleitoresPage from '@/components/dashboard/EleitoresPage'
+import { PAGE_SIZE } from '@/config/constants'
 
 type Props = {
   searchParams: Promise<{ page?: string; ordering?: string; search?: string; nr_eleitor?: string }>
@@ -11,7 +12,7 @@ export default async function VotacaoPage({ searchParams }: Props) {
     getVotacoes({
       page: page ? Number(page) : undefined,
       ordering: ordering ?? '-datetime',
-      page_size: 50,
+      page_size: PAGE_SIZE,
       search: search || undefined,
       nr_eleitor: nr_eleitor ? Number(nr_eleitor) : undefined,
     }),

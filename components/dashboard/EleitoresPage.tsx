@@ -11,6 +11,7 @@ import Modal from '@/components/dashboard/Modal'
 import PersonListItem from '@/components/dashboard/PersonListItem'
 import EmptyState from '@/components/dashboard/EmptyState'
 import Pagination from '@/components/dashboard/Pagination'
+import { PAGE_SIZE } from '@/config/constants'
 
 function formatDate(datetime: string) {
   return new Date(datetime).toLocaleString('pt-CV', {
@@ -57,7 +58,7 @@ export default function EleitoresPage({
   }
 
   const cancelingVote = data.results.find((v) => v.id === cancelId)
-  const totalPages = Math.ceil(data.count / 50)
+  const totalPages = Math.ceil(data.count / PAGE_SIZE)
 
   function goToPage(page: number) {
     const params = new URLSearchParams()

@@ -12,8 +12,7 @@ import Modal from "@/components/dashboard/Modal";
 import PersonListItem from "@/components/dashboard/PersonListItem";
 import EmptyState from "@/components/dashboard/EmptyState";
 import Pagination from "@/components/dashboard/Pagination";
-
-const PAGE_SIZE = 50;
+import { PAGE_SIZE } from "@/config/constants";
 
 export default function EleitoresHome({
   data,
@@ -153,7 +152,7 @@ export default function EleitoresHome({
                 <div className="flex items-center gap-1 md:gap-3">
                   <button
                     onClick={() => setConfirmId(eleitor.id)}
-                    className="bg-primary text-white px-2.5 md:px-8 py-1.5 md:py-3 rounded-md md:rounded-xl text-[10px] md:text-sm font-bold shadow-sm hover:bg-[#15803d] flex items-center justify-center min-w-[50px] md:min-w-[120px] transition-all active:scale-95"
+                    className="bg-primary text-white px-2.5 md:px-8 py-1.5 md:py-3 rounded-md md:rounded-xl text-[10px] md:text-sm font-bold shadow-sm hover:bg-[#15803d] flex items-center justify-center min-w-12.5 md:min-w-30 transition-all active:scale-95"
                   >
                     Votou
                   </button>

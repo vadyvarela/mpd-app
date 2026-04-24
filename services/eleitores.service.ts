@@ -33,7 +33,7 @@ export async function getEleitores(params?: {
   page_size?: number
 }): Promise<EleitoresListResponse> {
   const token = await getToken()
-  if (!token) return { count: 0, next: null, previous: null, results: [] }
+  if (!token) throw new Error('Não autenticado')
 
   const query = new URLSearchParams()
   if (params?.search) query.set('search', params.search)
@@ -46,7 +46,7 @@ export async function getEleitores(params?: {
     cache: 'no-store',
   })
 
-  if (!res.ok) return { count: 0, next: null, previous: null, results: [] }
+  if (!res.ok) throw new Error(`Erro ao carregar eleitores (${res.status})`)
   return res.json()
 }
 

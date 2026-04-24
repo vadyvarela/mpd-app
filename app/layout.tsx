@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Space_Grotesk } from 'next/font/google'
+import { Inter, Abhaya_Libre } from 'next/font/google'
 import { Toaster } from 'sonner'
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
 import './globals.css'
@@ -9,9 +9,10 @@ const inter = Inter({
   variable: '--font-sans',
 })
 
-const spaceGrotesk = Space_Grotesk({
+const spaceGrotesk = Abhaya_Libre({
   subsets: ['latin'],
   variable: '--font-display',
+  weight: '400'
 })
 
 export const viewport: Viewport = {

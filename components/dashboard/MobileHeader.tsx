@@ -15,10 +15,10 @@ function getRole(user: AuthUser): string {
 export default function MobileHeader({ user }: { user: AuthUser }) {
   return (
     <header className="md:hidden fixed top-0 left-0 right-0 h-11 bg-white/80 backdrop-blur-md border-b border-gray-300 z-[60] flex items-center justify-between px-4">
-      <Link href="/" className="flex items-center gap-2">
+      <Link href="/dashboard" className="flex items-center gap-2">
         <Image src="/mpd1.svg" alt="MpD Logo" width={70} height={70} className="rounded-full" />
       </Link>
-      <Link href="/perfil" className="flex items-center gap-2">
+      <Link href="/dashboard/perfil" className="flex items-center gap-2">
         <div className="text-right">
           <div className="text-[9px] font-bold text-gray-900 leading-none mb-0.5">{user.username}</div>
           <div className="text-[7px] text-primary font-bold uppercase tracking-wider leading-none">{getRole(user)}</div>

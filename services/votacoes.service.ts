@@ -64,7 +64,7 @@ export async function getVotacoes(params?: {
   nr_eleitor?: number
 }): Promise<VotacoesListResponse> {
   const token = await getToken()
-  if (!token) return { count: 0, next: null, previous: null, results: [] }
+  if (!token) throw new Error('Não autenticado')
 
   const query = new URLSearchParams()
   if (params?.ordering) query.set('ordering', params.ordering)
@@ -78,20 +78,20 @@ export async function getVotacoes(params?: {
     cache: 'no-store',
   })
 
-  if (!res.ok) return { count: 0, next: null, previous: null, results: [] }
+  if (!res.ok) throw new Error(`Erro ao carregar votações (${res.status})`)
   return res.json()
 }
 
-export async function getVotacoesStats(): Promise<VotacoesStats | null> {
+export async function getVotacoesStats(): Promise<VotacoesStats> {
   const token = await getToken()
-  if (!token) return null
+  if (!token) throw new Error('Não autenticado')
 
   const res = await fetch(`${process.env.API_URL}/api/votacoes/stats/`, {
     headers: { Authorization: `Bearer ${token}` },
     cache: 'no-store',
   })
 
-  if (!res.ok) return null
+  if (!res.ok) throw new Error(`Erro ao carregar estatísticas (${res.status})`)
   return res.json()
 }
 
