@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mpd-v1'
+const CACHE_NAME = 'mpd-v2'
 const OFFLINE_URL = '/offline'
 
 const PRECACHE_ASSETS = [
@@ -35,18 +35,17 @@ self.addEventListener('fetch', (event) => {
   if (request.method !== 'GET') return
   if (url.origin !== self.location.origin) return
 
-  // Next.js static assets — cache first
+  // Next.js static assets — network first, cache as fallback
+  // Safe because Next.js content-hashes all production chunks
   if (url.pathname.startsWith('/_next/static/')) {
     event.respondWith(
-      caches.match(request).then(
-        (cached) =>
-          cached ??
-          fetch(request).then((res) => {
-            const clone = res.clone()
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, clone))
-            return res
-          })
-      )
+      fetch(request)
+        .then((res) => {
+          const clone = res.clone()
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone))
+          return res
+        })
+        .catch(() => caches.match(request))
     )
     return
   }

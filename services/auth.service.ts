@@ -15,7 +15,7 @@ export type User = {
 }
 
 export function isDelegado(user: User): boolean {
-  return user.groups.includes('delegado')
+  return user.groups.includes('delegado') || user.is_superuser
 }
 
 export async function getUser(): Promise<User | null> {

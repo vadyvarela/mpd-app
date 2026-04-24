@@ -15,23 +15,23 @@ export default function DashboardLayout({
   user: User
   children: React.ReactNode
 }) {
-  const [isVisualLoading, setIsVisualLoading] = useState(() => {
-    if (typeof window === 'undefined') return true
-    return !sessionStorage.getItem('app-loaded')
-  })
+  //const [isVisualLoading, setIsVisualLoading] = useState(true)
 
-  useEffect(() => {
-    if (!isVisualLoading) return
-    const timer = setTimeout(() => {
-      sessionStorage.setItem('app-loaded', '1')
-      setIsVisualLoading(false)
-    }, 1200)
-    return () => clearTimeout(timer)
-  }, [])
+  // useEffect(() => {
+  //   if (sessionStorage.getItem('app-loaded')) {
+  //     setIsVisualLoading(false)
+  //     return
+  //   }
+  //   const timer = setTimeout(() => {
+  //     sessionStorage.setItem('app-loaded', '1')
+  //     setIsVisualLoading(false)
+  //   }, 1200)
+  //   return () => clearTimeout(timer)
+  // }, [])
 
   return (
     <AnimatePresence mode="wait">
-      {isVisualLoading ? (
+      {/* {isVisualLoading ? (
         <motion.div
           key="visual-loader"
           initial={{ opacity: 1 }}
@@ -46,9 +46,9 @@ export default function DashboardLayout({
             <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center text-white font-bold text-3xl shadow-xl shadow-green-100 italic mb-4">M</div>
             <Loader2 className="w-8 h-8 text-primary animate-spin" />
           </motion.div>
-          <p className="text-[10px] font-bold text-[#ADB5BD] uppercase tracking-[0.2em] animate-pulse">Sincronizando Sistema...</p>
+          <p className="text-[10px] font-bold text-gray-600 uppercase tracking-[0.2em] animate-pulse">Sincronizando Sistema...</p>
         </motion.div>
-      ) : (
+      ) : ( */}
         <div key="dashboard-shell" className="flex min-h-screen bg-[#F8F9FA] overflow-x-hidden">
           <MobileHeader user={user} />
           <Sidebar />
@@ -61,7 +61,7 @@ export default function DashboardLayout({
           </motion.main>
           <MobileNav />
         </div>
-      )}
+      {/* )} */}
     </AnimatePresence>
   )
 }

@@ -10,29 +10,29 @@ export default function SemPermissao() {
           </svg>
         </div>
 
-        <h1 className="font-display font-bold text-2xl text-[#1A1A1A] mb-2">Acesso Restrito</h1>
-        <p className="text-[#6C757D] text-sm leading-relaxed mb-8">
+        <h1 className="font-display font-bold text-2xl text-gray-900 mb-2">Acesso Restrito</h1>
+        <p className="text-gray-500 text-sm leading-relaxed mb-8">
           A sua conta não tem permissões para aceder a esta área.<br />
           Apenas delegados autorizados podem entrar.
         </p>
 
-        <div className="bg-white rounded-2xl border border-[#E9ECEF] p-4 mb-8 text-left">
-          <p className="text-[10px] font-bold text-[#ADB5BD] uppercase tracking-wider mb-1">Conta Autenticada</p>
-          <p className="text-sm font-bold text-[#1A1A1A]">Grupo sem acesso atribuído</p>
-          <p className="text-xs text-[#6C757D] mt-0.5">Contacte o administrador do sistema.</p>
+        <div className="bg-white rounded-2xl border border-gray-300 p-4 mb-8 text-left">
+          <p className="text-[10px] font-bold text-gray-600 uppercase tracking-wider mb-1">Conta Autenticada</p>
+          <p className="text-sm font-bold text-gray-900">Grupo sem acesso atribuído</p>
+          <p className="text-xs text-gray-500 mt-0.5">Contacte o administrador do sistema.</p>
         </div>
 
         <form action={logout}>
           <button
             type="submit"
-            className="w-full bg-[#1A1A1A] text-white py-3 rounded-2xl font-bold text-sm hover:bg-black transition-colors"
+            className="w-full bg-gray-900 text-white py-3 rounded-2xl font-bold text-sm hover:bg-black transition-colors"
           >
             Terminar Sessão
           </button>
         </form>
 
-        <p className="text-[10px] font-bold text-[#ADB5BD] uppercase tracking-widest mt-8">
-          Suporte: <span className="text-[#1A1A1A]">geral@mpd.cv</span>
+        <p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest mt-8">
+          Suporte: <span className="text-gray-900">geral@mpd.cv</span>
         </p>
       </div>
     </div>

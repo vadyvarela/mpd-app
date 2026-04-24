@@ -23,8 +23,8 @@ export default function LoginForm() {
       </div>
 
       <div className="flex items-center justify-center flex-col mb-10">
-        <h2 className="text-3xl font-display font-bold text-[#1A1A1A] mb-2">Bem-vindo</h2>
-        <p className="text-[#6C757D] text-sm font-medium">
+        <h2 className="text-3xl font-display font-bold text-gray-900 mb-2">Bem-vindo</h2>
+        <p className="text-gray-500 text-sm font-medium">
           Introduza as suas credenciais para aceder ao painel de gestão.
         </p>
       </div>
@@ -41,11 +41,11 @@ export default function LoginForm() {
 
       <form action={formAction} className="space-y-5">
         <div className="space-y-2">
-          <label className="text-[10px] font-bold text-[#ADB5BD] uppercase tracking-wider ml-1">
+          <label className="text-[10px] font-bold text-gray-600 uppercase tracking-wider ml-1">
             Nome do utilizado
           </label>
           <div className="relative group">
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#ADB5BD] group-focus-within:text-primary transition-colors">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-primary transition-colors">
               <Mail className="w-5 h-5" />
             </div>
             <input
@@ -53,14 +53,14 @@ export default function LoginForm() {
               name="username"
               placeholder="Praia"
               required
-              className="w-full text-gray-500 pl-12 pr-4 py-4 rounded-2xl border border-[#E9ECEF] bg-white text-[16px] md:text-sm outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all"
+              className="w-full text-gray-500 pl-12 pr-4 py-4 rounded-2xl border border-gray-300 bg-white text-[16px] md:text-sm outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all"
             />
           </div>
         </div>
 
         <div className="space-y-2">
           <div className="flex justify-between items-center ml-1">
-            <label className="text-[10px] font-bold text-[#ADB5BD] uppercase tracking-wider">
+            <label className="text-[10px] font-bold text-gray-600 uppercase tracking-wider">
               Palavra-passe
             </label>
             <button
@@ -71,7 +71,7 @@ export default function LoginForm() {
             </button>
           </div>
           <div className="relative group">
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#ADB5BD] group-focus-within:text-primary transition-colors">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-primary transition-colors">
               <Lock className="w-5 h-5" />
             </div>
             <input
@@ -79,7 +79,7 @@ export default function LoginForm() {
               name="password"
               placeholder="••••••••"
               required
-              className="w-full text-gray-500 pl-12 pr-4 py-4 rounded-2xl border border-[#E9ECEF] bg-white text-[16px] md:text-sm outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all"
+              className="w-full text-gray-500 pl-12 pr-4 py-4 rounded-2xl border border-gray-300 bg-white text-[16px] md:text-sm outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all"
             />
           </div>
         </div>
